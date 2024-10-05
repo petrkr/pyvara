@@ -2,6 +2,7 @@
 # Vara protocol implementation in Python
 
 __author__ = "OK1PKR Petr Kracik"
+__author_email__ = "pyvara@ok1pkr.radio"
 __version__ = "0.0.1"
 __license__ = "MIT"
 

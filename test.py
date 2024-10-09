@@ -1,4 +1,4 @@
-from vara import Vara
+from vara.varahf import VaraHF
 from time import sleep
 import Hamlib
 
@@ -68,7 +68,7 @@ def main():
     rig = initialize_rig("localhost")
 
 
-    modem = Vara()
+    modem = VaraHF()
 
     modem.on_bitrate(on_bitrate)
     modem.on_cqframe(on_cqframe)

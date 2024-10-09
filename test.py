@@ -40,8 +40,8 @@ def on_registered(calls):
 def on_bitrate(bitrate):
     print(bitrate)
 
-def on_cqframe(call, bandwidth):
-    print(f"CQ from {call} with {bandwidth}Hz")
+def on_cqframe(cqframe):
+    print(cqframe)
 
 def on_sn(sn):
     print(f"SN {sn} dB")

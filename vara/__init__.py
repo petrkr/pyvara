@@ -17,6 +17,8 @@ class Vara():
         self._events = {}
         self._is_running = True
         self._command_queue = list()
+        self._connected = None
+        self._mycalls = None
 
 
     def _send(self, data: bytes) -> bool:
@@ -34,6 +36,7 @@ class Vara():
             return
 
         if message == "DISCONNECTED":
+            self._connected = None
             self._event("on_disconnect")
             return
 
@@ -80,6 +83,7 @@ class Vara():
 
         if message.startswith("CONNECTED"):
             data = message.split()
+            self._connected = data[1]
             self._event("on_connect", data[1], data[2], int(data[3]))
             return
 
@@ -103,7 +107,7 @@ class Vara():
             return
 
 
-        print(f"Unknown messaage: {message}")
+        print(f"Unknown message: {message}")
 
 
     def _receive(self) -> bytes:
@@ -115,8 +119,6 @@ class Vara():
                     break
 
                 messages = data.decode().split('\r')
-
-                print(messages)
 
                 for m in messages:
                     if m:
@@ -150,7 +152,6 @@ class Vara():
                 print(f"Error while calling user function: {e}")
 
 
-
     def modem_connect(self) -> bool:
         try:
             self._socket = socket.create_connection((self._host, self._cport))
@@ -170,6 +171,15 @@ class Vara():
 
         self._socket.close()
         self._is_running = False
+
+
+    @property
+    def is_connected(self):
+        return self._connected is not None
+
+    @property
+    def remote_call(self):
+        return self._connected
 
 
     def on_bitrate(self, callback):

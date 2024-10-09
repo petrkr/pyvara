@@ -8,6 +8,7 @@ __license__ = "MIT"
 
 import socket
 import threading
+from vara.bandwidth import Bandwidth
 
 class Vara():
     def __init__(self, host = "localhost", control_port = 8300):
@@ -247,9 +248,14 @@ class Vara():
         self._send(b'VERSION\r')
 
 
-    def bandwidth(self, width=500):
+    def abort(self):
+        self._command_queue.append("abort")
+        self._send('ABORT\r'.encode())
+
+
+    def bandwidth(self, bandwidth=Bandwidth.BW500):
         self._command_queue.append("bw")
-        self._send('BW{}\r'.format(width).encode())
+        self._send('BW{}\r'.format(bandwidth.value).encode())
 
 
     def chat(self, state = True):
@@ -285,6 +291,7 @@ class Vara():
         calls = ' '.join(callsigns)
         self._send(f'MYCALL {calls}\r'.encode())
 
-    def cq(self, call, bandwidth):
+
+    def cq(self, call, bandwidth=Bandwidth.BW500):
         self._command_queue.append("cq")
-        self._send('CQFRAME {} {}\r'.format(call, bandwidth).encode())
+        self._send('CQFRAME {} {}\r'.format(call, bandwidth.value).encode())

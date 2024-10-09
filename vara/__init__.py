@@ -53,6 +53,15 @@ class Vara():
             self._event("on_cancelpending")
             return
 
+        if message == "ENCRYPTED LINK":
+            self._event("on_link", Link.ENCRYPTED)
+            return
+
+        if message == "UNENCRYPTED LINK":
+            self._event("on_link", Link.UNENCRYPTED)
+            return
+
+
         if message == "OK":
             if self._command_queue:
               cmd = self._command_queue[0]

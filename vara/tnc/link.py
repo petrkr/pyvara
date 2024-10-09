@@ -5,6 +5,8 @@ from enum import Enum
 class Link(Enum):
     REGISTERED = "REGISTERED"
     UNREGISTERED = "UNREGISTERED"
+    ENCRYPTED = "ENCRYPTED"
+    UNENCRYPTED = "UNENCRYPTED"
 
     @classmethod
     def from_value(cls, value):

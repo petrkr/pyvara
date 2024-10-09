@@ -9,6 +9,8 @@ __license__ = "MIT"
 import socket
 import threading
 from vara.bandwidth import Bandwidth
+from vara.compression import Compression
+
 
 class Vara():
     def __init__(self, host = "localhost", control_port = 8300):
@@ -261,6 +263,11 @@ class Vara():
     def chat(self, state = True):
         self._command_queue.append("chat")
         self._send('CHAT {}\r'.format("ON" if state else "OFF").encode())
+
+
+    def compression(self, compression=Compression.TEXT):
+        self._command_queue.append("compression")
+        self._send('COMPRESSION {}\r'.format(compression.value).encode())
 
 
     def connect(self, mycall, dxcall):

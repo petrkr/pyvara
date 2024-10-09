@@ -8,13 +8,11 @@ __license__ = "MIT"
 
 import socket
 import threading
-from vara.tnc.bandwidth import Bandwidth
 from vara.tnc.compression import Compression
 from vara.tnc.cleantxbuffer import CleanTxBuffer
 from vara.tnc.encryption import Encryption
 from vara.tnc.link import Link
 from vara.tnc.bitrate import Bitrate
-from vara.tnc.cqframe import CQFrameHF
 
 class Vara():
     def __init__(self, host = "localhost", control_port = 8300):
@@ -93,11 +91,6 @@ class Vara():
 
         if message.startswith("TUNE"):
             self._event("on_tune", float(message.replace("TUNE ", "")))
-            return
-
-        # TODO: find out HF, SAT, FM
-        if message.startswith("CQFRAME"):
-            self._event("on_cqframe", CQFrameHF.from_string(message))
             return
 
         if message.startswith("CONNECTED"):
@@ -277,11 +270,6 @@ class Vara():
         self._send('ABORT\r'.encode())
 
 
-    def bandwidth(self, bandwidth=Bandwidth.BW500):
-        self._command_queue.append("bw")
-        self._send('BW{}\r'.format(bandwidth.value).encode())
-
-
     def chat(self, state = True):
         self._command_queue.append("chat")
         self._send('CHAT {}\r'.format("ON" if state else "OFF").encode())
@@ -294,11 +282,6 @@ class Vara():
     def compression(self, compression=Compression.TEXT):
         self._command_queue.append("compression")
         self._send('COMPRESSION {}\r'.format(compression.value).encode())
-
-
-    def connect(self, mycall, dxcall):
-        self._command_queue.append("connect")
-        self._send('CONNECT {} {}\r'.format(mycall, dxcall).encode())
 
 
     def disconnect(self):
@@ -323,11 +306,6 @@ class Vara():
         self._command_queue.append("mycall")
         calls = ' '.join(callsigns)
         self._send(f'MYCALL {calls}\r'.encode())
-
-
-    def cq(self, call, bandwidth=Bandwidth.BW500):
-        self._command_queue.append("cq")
-        self._send('CQFRAME {} {}\r'.format(call, bandwidth.value).encode())
 
 
     def tune(self, tune="?"):

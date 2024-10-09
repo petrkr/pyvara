@@ -105,7 +105,7 @@ class Vara():
             return
 
         if message.startswith("CLEANTXBUFFER"):
-            data = message.replace("CLEANTXBUFFER ", "")
+            data = message.replace("CLEANTXBUFFER ", "").strip()
             self._event("on_cleantxbuffer", CleanTxBuffer.from_value(data))
             return
 

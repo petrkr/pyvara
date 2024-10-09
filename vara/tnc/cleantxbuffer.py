@@ -3,9 +3,9 @@
 from enum import Enum
 
 class CleanTxBuffer(Enum):
-    BUFFEREMPTY = "BUFFEREMPTY"
-    BUFFERFAILED = "BUFFERFAILED"
-    BUFFEROK = "BUFFEROK"
+    EMPTY = "BUFFEREMPTY"
+    FAILED = "FAILED"
+    OK = "OK"
 
     @classmethod
     def from_value(cls, value):

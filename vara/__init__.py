@@ -79,6 +79,10 @@ class Vara():
             self._event("on_sn", float(message.replace("SN ", "")))
             return
 
+        if message.startswith("TUNE"):
+            self._event("on_tune", float(message.replace("TUNE ", "")))
+            return
+
         if message.startswith("CQFRAME"):
             data = message.split()
             self._event("on_cqframe", data[1], int(data[2]))
@@ -93,6 +97,10 @@ class Vara():
         if message.startswith("BUFFER"):
             data = message.split()
             self._event("on_buffer", int(data[1]))
+            return
+
+        if message.startswith("CLEANTXBUFFER"):
+            self._event("on_cleantxbuffer", message.replace("CLEANTXBUFFER ", ""))
             return
 
         # UNENCRYPTED LINK
@@ -265,6 +273,10 @@ class Vara():
         self._send('CHAT {}\r'.format("ON" if state else "OFF").encode())
 
 
+    def cleantxbuffer(self):
+        self._send('CLEANTXBUFFER\r'.encode())
+
+
     def compression(self, compression=Compression.TEXT):
         self._command_queue.append("compression")
         self._send('COMPRESSION {}\r'.format(compression.value).encode())
@@ -302,3 +314,10 @@ class Vara():
     def cq(self, call, bandwidth=Bandwidth.BW500):
         self._command_queue.append("cq")
         self._send('CQFRAME {} {}\r'.format(call, bandwidth.value).encode())
+
+
+    def tune(self, tune="?"):
+        if tune is not "?":
+            self._command_queue.append("tune")
+
+        self._send('TUNE {}\r'.format(tune).encode())

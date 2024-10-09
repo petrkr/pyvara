@@ -1,5 +1,5 @@
 from vara.varahf import VaraHF
-from vara.bandwidth import Bandwidth
+from vara.tnc.bandwidth import Bandwidth
 from time import sleep
 import Hamlib
 

@@ -8,13 +8,13 @@ __license__ = "MIT"
 
 import socket
 import threading
-from vara.bandwidth import Bandwidth
-from vara.compression import Compression
-from vara.cleantxbuffer import CleanTxBuffer
-from vara.encryption import Encryption
-from vara.link import Link
-from vara.bitrate import Bitrate
-from vara.cqframe import CQFrameHF
+from vara.tnc.bandwidth import Bandwidth
+from vara.tnc.compression import Compression
+from vara.tnc.cleantxbuffer import CleanTxBuffer
+from vara.tnc.encryption import Encryption
+from vara.tnc.link import Link
+from vara.tnc.bitrate import Bitrate
+from vara.tnc.cqframe import CQFrameHF
 
 class Vara():
     def __init__(self, host = "localhost", control_port = 8300):

@@ -38,7 +38,7 @@ def on_registered(calls):
     registered = True
 
 def on_bitrate(bitrate):
-    print(f"Bitrate {bitrate}")
+    print(bitrate)
 
 def on_cqframe(call, bandwidth):
     print(f"CQ from {call} with {bandwidth}Hz")
@@ -94,6 +94,8 @@ def main():
     modem.mycall(["MYCALL","MYCALL-T"])
     modem.bandwidth(Bandwidth.BW500)
     modem.compression()
+    modem.cleantxbuffer()
+    modem.tune()
 
     while not registered:
         sleep(1)

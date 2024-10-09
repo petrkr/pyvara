@@ -1,4 +1,5 @@
 from vara.varahf import VaraHF
+from vara.bandwidth import Bandwidth
 from time import sleep
 import Hamlib
 
@@ -86,12 +87,13 @@ def main():
     print(modem.modem_connect())
 
     modem.version()
-    modem.bandwidth(500)
+    modem.bandwidth(Bandwidth.BW500)
     modem.chat()
     modem.listen()
     modem.listencq()
     modem.mycall(["MYCALL","MYCALL-T"])
-    modem.bandwidth(500)
+    modem.bandwidth(Bandwidth.BW500)
+    modem.compression()
 
     while not registered:
         sleep(1)

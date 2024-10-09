@@ -151,7 +151,7 @@ class Vara():
 
 
 
-    def connect(self) -> bool:
+    def modem_connect(self) -> bool:
         try:
             self._socket = socket.create_connection((self._host, self._cport))
 
@@ -164,7 +164,7 @@ class Vara():
             return False
 
 
-    def disconnect(self):
+    def modem_disconnect(self):
         if self._socket is None:
             return
 
@@ -242,9 +242,14 @@ class Vara():
         self._send('CHAT {}\r'.format("ON" if state else "OFF").encode())
 
 
-    def call(self, mycall, dxcall):
+    def connect(self, mycall, dxcall):
         self._command_queue.append("connect")
         self._send('CONNECT {} {}\r'.format(mycall, dxcall).encode())
+
+
+    def disconnect(self):
+        self._command_queue.append("disconnect")
+        self._send('DISCONNECT\r'.encode())
 
 
     def listen(self, state = True):

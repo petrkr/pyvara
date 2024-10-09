@@ -129,7 +129,7 @@ class Vara():
             print(f"Failed to receive data: {e}")
 
         finally:
-            self.disconnect()
+            self.modem_disconnect()
 
 
     def _add_event(self, event, callback):
@@ -171,6 +171,7 @@ class Vara():
 
         self._socket.close()
         self._is_running = False
+        self._event("on_modem_disconnect")
 
 
     @property
@@ -180,6 +181,10 @@ class Vara():
     @property
     def remote_call(self):
         return self._connected
+
+
+    def on_modem_disconnect(self, callback):
+        self._add_event("on_modem_disconnect", callback)
 
 
     def on_bitrate(self, callback):

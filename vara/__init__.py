@@ -105,10 +105,8 @@ class Vara():
 
         if message.startswith("LINK"):
             data = message.replace("LINK ", "")
-            self._event("on_cleantxbuffer", Link.from_value(data))
+            self._event("on_link", Link.from_value(data))
             return
-
-        # UNENCRYPTED LINK
 
         if message.startswith("BITRATE"):
             self._event("on_bitrate", Bitrate.from_string(message))

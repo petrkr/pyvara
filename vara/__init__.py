@@ -14,7 +14,7 @@ from vara.cleantxbuffer import CleanTxBuffer
 from vara.encryption import Encryption
 from vara.link import Link
 from vara.bitrate import Bitrate
-
+from vara.cqframe import CQFrameHF
 
 class Vara():
     def __init__(self, host = "localhost", control_port = 8300):
@@ -95,9 +95,9 @@ class Vara():
             self._event("on_tune", float(message.replace("TUNE ", "")))
             return
 
+        # TODO: find out HF, SAT, FM
         if message.startswith("CQFRAME"):
-            data = message.split()
-            self._event("on_cqframe", data[1], int(data[2]))
+            self._event("on_cqframe", CQFrameHF.from_string(message))
             return
 
         if message.startswith("CONNECTED"):

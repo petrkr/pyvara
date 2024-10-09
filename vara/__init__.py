@@ -13,6 +13,7 @@ from vara.compression import Compression
 from vara.cleantxbuffer import CleanTxBuffer
 from vara.encryption import Encryption
 from vara.link import Link
+from vara.bitrate import Bitrate
 
 
 class Vara():
@@ -121,13 +122,9 @@ class Vara():
             return
 
         # UNENCRYPTED LINK
-        # LINK UNREGISTERED
 
-        # TODO: Check and parse this messages
-        # BITRATE (1)  18 bps
         if message.startswith("BITRATE"):
-            b = message.replace("BITRATE ", "")
-            self._event("on_bitrate", b)
+            self._event("on_bitrate", Bitrate.from_string(message))
             return
 
         if message.startswith("ENCRYPTION"):

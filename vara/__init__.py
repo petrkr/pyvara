@@ -10,6 +10,9 @@ import socket
 import threading
 from vara.bandwidth import Bandwidth
 from vara.compression import Compression
+from vara.cleantxbuffer import CleanTxBuffer
+from vara.encryption import Encryption
+from vara.link import Link
 
 
 class Vara():
@@ -59,6 +62,14 @@ class Vara():
             self._event("on_ok", cmd)
             return
 
+        if message == "WRONG":
+            if self._command_queue:
+              cmd = self._command_queue[0]
+              del self._command_queue[0]
+
+            self._event("on_wrong", cmd)
+            return
+
         if message.startswith("VERSION"):
             self._event("on_version", message.replace("VERSION ", ""))
             return
@@ -100,7 +111,13 @@ class Vara():
             return
 
         if message.startswith("CLEANTXBUFFER"):
-            self._event("on_cleantxbuffer", message.replace("CLEANTXBUFFER ", ""))
+            data = message.replace("CLEANTXBUFFER ", "")
+            self._event("on_cleantxbuffer", CleanTxBuffer.from_value(data))
+            return
+
+        if message.startswith("LINK"):
+            data = message.replace("LINK ", "")
+            self._event("on_cleantxbuffer", Link.from_value(data))
             return
 
         # UNENCRYPTED LINK
@@ -114,9 +131,9 @@ class Vara():
             return
 
         if message.startswith("ENCRYPTION"):
-            self._event("on_encryption", message)
+            data = message.replace("ENCRYPTION ", "")
+            self._event("on_encryption", Encryption.from_value(data))
             return
-
 
         print(f"Unknown message: {message}")
 

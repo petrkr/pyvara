@@ -2,6 +2,7 @@ from vara import Vara
 from time import sleep
 import Hamlib
 
+modem = None
 rig = None
 registered = False
 
@@ -63,6 +64,7 @@ def on_ptt(state):
 
 def main():
     global rig
+    global modem
     rig = initialize_rig("localhost")
 
 
@@ -93,6 +95,13 @@ def main():
 
     while not registered:
         sleep(1)
+
+
+    def interact():
+        import code
+        code.InteractiveConsole(locals=globals()).interact()
+
+    interact()
 
     while True:
         sleep(1)

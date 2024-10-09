@@ -93,12 +93,6 @@ class Vara():
             self._event("on_tune", float(message.replace("TUNE ", "")))
             return
 
-        if message.startswith("CONNECTED"):
-            data = message.split()
-            self._connected = data[1]
-            self._event("on_connect", data[1], data[2], int(data[3]))
-            return
-
         if message.startswith("BUFFER"):
             data = message.split()
             self._event("on_buffer", int(data[1]))

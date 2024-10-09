@@ -3,9 +3,16 @@
 from . import Vara
 from .tnc.cqframe import CQFrameHF
 from .tnc.bandwidth import Bandwidth
+from .tnc.connected import ConnectedHF
 
 class VaraHF(Vara):
     def _parse_vara_message(self, message):
+        if message.startswith("CONNECTED"):
+            data = ConnectedHF.from_string(message)
+            self._connected = data.destination
+            self._event("on_connect", data)
+            return
+
         if message.startswith("CQFRAME"):
             self._event("on_cqframe", CQFrameHF.from_string(message))
             return

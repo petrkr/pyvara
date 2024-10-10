@@ -46,14 +46,20 @@ def on_cqframe(cqframe):
 def on_sn(sn):
     print(f"SN {sn} dB")
 
-def on_connect(source, dest, bandwidth):
-    print(f"Connected from {source} to {dest} at {bandwidth} Hz")
+def on_connect(connection):
+    print(connection)
+
+def on_disconnect():
+    print("Peer disconnected")
 
 def on_pending():
     print("Something is pending")
 
 def on_cancelpending():
     print("Something canceled pending")
+
+def on_tune(data):
+    print(data)
 
 def on_ptt(state):
     print(f"PTT: {state}")
@@ -80,9 +86,11 @@ def main():
     modem.on_registered(on_registered)
     modem.on_sn(on_sn)
     modem.on_connect(on_connect)
+    modem.on_disconnect(on_disconnect)
     modem.on_pending(on_pending)
     modem.on_cancelpending(on_cancelpending)
     modem.on_ptt(on_ptt)
+    modem.on_tune(on_tune)
 
     print(modem.modem_connect())
 

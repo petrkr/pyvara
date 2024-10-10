@@ -261,6 +261,10 @@ class Vara():
         self._add_event("on_version", callback)
 
 
+    def on_tune(self, callback):
+        self._add_event("on_tune", callback)
+
+
     def version(self):
         self._send(b'VERSION\r')
 

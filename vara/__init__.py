@@ -126,7 +126,7 @@ class Vara():
             self._event("on_encryption", Encryption.from_value(data))
             return
 
-        print(f"Unknown message: {message}")
+        self._event("on_unknown", message)
 
 
     def _receive(self) -> bytes:
@@ -161,7 +161,6 @@ class Vara():
 
     def _event(self, event, *args):
         if event not in self._events:
-            print(f"Received event {event} without handler: {args}")
             return
 
         for f in self._events[event]:
